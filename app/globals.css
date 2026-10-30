@@ -58,11 +58,11 @@ button { font: inherit; cursor: pointer; }
 .mobile-top-actions { position: absolute; left: calc(12px + env(safe-area-inset-left, 0px)); top: calc(72px + env(safe-area-inset-top, 0px)); z-index: 20; display: flex; gap: 8px; align-items: center; pointer-events: none; }
 .mobile-action { display: flex; align-items: center; justify-content: center; width: clamp(42px, 9vw, 52px); height: clamp(42px, 9vw, 52px); padding: 0; box-sizing: border-box; border-radius: 12px; border: 2px solid rgba(255,255,255,.18); background: rgba(11,15,32,.88); color: var(--pac); font-size: clamp(18px, 4vw, 22px); line-height: 1; box-shadow: 0 0 14px rgba(47,91,255,.18); flex-shrink: 0; }
 .mobile-direction-button {
-  display: flex; align-items: center; justify-content: center; width: clamp(44px, 12vw, 56px); height: clamp(44px, 12vw, 56px); padding: 0;
+  display: flex; align-items: center; justify-content: center; width: clamp(56px, 16vw, 72px); height: clamp(56px, 16vw, 72px); padding: 0;
   border: 2px solid rgba(255,255,255,.2); border-radius: 12px; background: rgba(11,15,32,.92); color: var(--pac);
   box-shadow: 0 0 14px rgba(47,91,255,.22), inset 0 0 12px rgba(47,91,255,.12); touch-action: none; user-select: none;
 }
-.mobile-direction-pad { display: grid; grid-template-columns: repeat(3, clamp(44px, 12vw, 56px)); grid-template-rows: repeat(3, clamp(44px, 12vw, 56px)); gap: 4px; }
+.mobile-direction-pad { display: grid; grid-template-columns: repeat(3, clamp(56px, 16vw, 72px)); grid-template-rows: repeat(3, clamp(56px, 16vw, 72px)); gap: 4px; }
 .mobile-direction-pad > :nth-child(1) { grid-area: 1 / 2; }
 .mobile-direction-pad > :nth-child(2) { grid-area: 2 / 1; }
 .mobile-direction-pad > :nth-child(3) { grid-area: 2 / 3; }

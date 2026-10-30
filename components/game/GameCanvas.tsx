@@ -28,7 +28,10 @@ export default function GameCanvas({ options, onEngine }: Props) {
       onMuteChange: (m) => optionsRef.current.onMuteChange?.(m),
     });
     const fit = () => {
-      const ts = Math.max(8, Math.floor(Math.min(wrap.clientWidth / COLS, wrap.clientHeight / ROWS)));
+      const style = window.getComputedStyle(wrap);
+      const width = wrap.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      const height = wrap.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+      const ts = Math.max(8, Math.floor(Math.min(width / COLS, height / ROWS)));
       engine.resize(ts, window.devicePixelRatio || 1);
     };
     const ro = new ResizeObserver(fit);
@@ -40,7 +43,7 @@ export default function GameCanvas({ options, onEngine }: Props) {
   }, []);
 
   return (
-    <div ref={wrapRef} className="absolute inset-0 flex h-full w-full items-center justify-center p-2 pb-[calc(136px+env(safe-area-inset-bottom,0px))] md:pb-2">
+    <div ref={wrapRef} className="absolute inset-0 flex h-full w-full items-center justify-center px-2 pt-[calc(64px+env(safe-area-inset-top,0px))] pb-[calc(240px+env(safe-area-inset-bottom,0px))] md:p-2">
       <canvas ref={canvasRef} className="block h-full w-full max-h-full max-w-full object-contain" aria-label="Pac-Man game board" role="img" />
     </div>
   );

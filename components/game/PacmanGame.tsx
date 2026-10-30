@@ -56,7 +56,7 @@ function MobileDirectionButton({ dir, label, icon: Icon, onPress, onRelease }: M
       onPointerCancel={(event) => releasePointer(event.pointerId)}
       onLostPointerCapture={(event) => releasePointer(event.pointerId)}
     >
-      <Icon size={24} strokeWidth={3} aria-hidden="true" />
+      <Icon size={30} strokeWidth={3} aria-hidden="true" />
     </button>
   );
 }
