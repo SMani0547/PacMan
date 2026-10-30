@@ -199,14 +199,12 @@ export default function PacmanGame({ player, difficulty, onExit, onLeaderboard, 
               {muted ? <VolumeX size={18} strokeWidth={2.8} /> : <Volume2 size={18} strokeWidth={2.8} />}
             </button>
           </div>
-          <div className="mobile-direction-controls pointer-events-none absolute inset-x-0 bottom-[calc(8px+env(safe-area-inset-bottom,0px))] z-20 flex items-end justify-between px-[clamp(24px,8vw,64px)] md:hidden">
-            <div className="mobile-direction-stack pointer-events-none flex flex-col gap-2" role="group" aria-label="Vertical movement controls">
+          <div className="mobile-direction-controls pointer-events-none absolute bottom-[calc(8px+env(safe-area-inset-bottom,0px))] left-1/2 z-20 -translate-x-1/2 md:hidden">
+            <div className="mobile-direction-pad pointer-events-none" role="group" aria-label="Movement controls">
               <MobileDirectionButton dir={UP} label="Move up" icon={ArrowUp} onPress={pressDir} onRelease={releaseDir} />
-              <MobileDirectionButton dir={DOWN} label="Move down" icon={ArrowDown} onPress={pressDir} onRelease={releaseDir} />
-            </div>
-            <div className="mobile-direction-row pointer-events-none flex gap-2" role="group" aria-label="Horizontal movement controls">
               <MobileDirectionButton dir={LEFT} label="Move left" icon={ArrowLeft} onPress={pressDir} onRelease={releaseDir} />
               <MobileDirectionButton dir={RIGHT} label="Move right" icon={ArrowRight} onPress={pressDir} onRelease={releaseDir} />
+              <MobileDirectionButton dir={DOWN} label="Move down" icon={ArrowDown} onPress={pressDir} onRelease={releaseDir} />
             </div>
           </div>
         </>

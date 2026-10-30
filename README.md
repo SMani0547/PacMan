@@ -215,6 +215,8 @@ Requires Node.js 20+.
 | <kbd>M</kbd> | Mute / unmute (remembered) |
 | <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> | Pick a difficulty on the selection screen |
 
+On touch screens, use the on-screen directional pad in the lower-left corner.
+
 The game pauses by itself when the browser tab is hidden. The pause menu offers **Resume**, **Restart Level**, **Restart Game** and **Quit to Menu**, and asks before anything destructive.
 
 ### Difficulty modes
@@ -431,4 +433,3 @@ Below 640 px wide the arcade asks you to switch to a larger screen.
 <sub>BY: Shiva Mani Goundar</sub>
 
 </div>
-

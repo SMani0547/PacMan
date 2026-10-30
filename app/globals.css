@@ -62,6 +62,11 @@ button { font: inherit; cursor: pointer; }
   border: 2px solid rgba(255,255,255,.2); border-radius: 12px; background: rgba(11,15,32,.92); color: var(--pac);
   box-shadow: 0 0 14px rgba(47,91,255,.22), inset 0 0 12px rgba(47,91,255,.12); touch-action: none; user-select: none;
 }
+.mobile-direction-pad { display: grid; grid-template-columns: repeat(3, clamp(44px, 12vw, 56px)); grid-template-rows: repeat(3, clamp(44px, 12vw, 56px)); gap: 4px; }
+.mobile-direction-pad > :nth-child(1) { grid-area: 1 / 2; }
+.mobile-direction-pad > :nth-child(2) { grid-area: 2 / 1; }
+.mobile-direction-pad > :nth-child(3) { grid-area: 2 / 3; }
+.mobile-direction-pad > :nth-child(4) { grid-area: 3 / 2; }
 .mobile-direction-button:active { border-color: var(--pac); background: rgba(47,91,255,.42); box-shadow: 0 0 18px rgba(255,230,0,.3); }
 .mobile-direction-button:focus-visible { outline: 2px solid var(--pac); outline-offset: 3px; }
 
