@@ -40,7 +40,7 @@ export default function GameCanvas({ options, onEngine }: Props) {
   }, []);
 
   return (
-    <div ref={wrapRef} className="absolute inset-0 flex h-full w-full items-center justify-center p-2 pb-[calc(110px+env(safe-area-inset-bottom,0px))] md:pb-2">
+    <div ref={wrapRef} className="absolute inset-0 flex h-full w-full items-center justify-center p-2 pb-[calc(136px+env(safe-area-inset-bottom,0px))] md:pb-2">
       <canvas ref={canvasRef} className="block h-full w-full max-h-full max-w-full object-contain" aria-label="Pac-Man game board" role="img" />
     </div>
   );

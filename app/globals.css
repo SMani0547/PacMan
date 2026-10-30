@@ -57,20 +57,13 @@ button { font: inherit; cursor: pointer; }
 
 .mobile-top-actions { position: absolute; left: calc(12px + env(safe-area-inset-left, 0px)); top: calc(72px + env(safe-area-inset-top, 0px)); z-index: 20; display: flex; gap: 8px; align-items: center; pointer-events: none; }
 .mobile-action { display: flex; align-items: center; justify-content: center; width: clamp(42px, 9vw, 52px); height: clamp(42px, 9vw, 52px); padding: 0; box-sizing: border-box; border-radius: 12px; border: 2px solid rgba(255,255,255,.18); background: rgba(11,15,32,.88); color: var(--pac); font-size: clamp(18px, 4vw, 22px); line-height: 1; box-shadow: 0 0 14px rgba(47,91,255,.18); flex-shrink: 0; }
-.mobile-joystick {
-  position: relative; width: clamp(118px, 32vw, 150px); height: clamp(118px, 32vw, 150px); margin-bottom: env(safe-area-inset-bottom, 0px);
-  border-radius: 50%; border: 3px solid rgba(255,255,255,.18); background: radial-gradient(circle at 35% 30%, rgba(46,58,94,.85), rgba(10,12,22,.95) 58%);
-  box-shadow: inset 0 0 0 2px rgba(255,255,255,.06), 0 0 20px rgba(47,91,255,.16); overflow: hidden; touch-action: none;
+.mobile-direction-button {
+  display: flex; align-items: center; justify-content: center; width: clamp(44px, 12vw, 56px); height: clamp(44px, 12vw, 56px); padding: 0;
+  border: 2px solid rgba(255,255,255,.2); border-radius: 12px; background: rgba(11,15,32,.92); color: var(--pac);
+  box-shadow: 0 0 14px rgba(47,91,255,.22), inset 0 0 12px rgba(47,91,255,.12); touch-action: none; user-select: none;
 }
-.mobile-joystick-ring {
-  position: absolute; inset: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.02);
-}
-.mobile-joystick-stick {
-  position: absolute; left: 50%; top: 50%; width: clamp(38px, 10vw, 52px); height: clamp(38px, 10vw, 52px); margin-left: calc(clamp(38px, 10vw, 52px) / -2); margin-top: calc(clamp(38px, 10vw, 52px) / -2);
-  border-radius: 50%; border: 3px solid rgba(255,255,255,.2); background: radial-gradient(circle at 35% 25%, rgba(255,255,255,.18), rgba(255,230,0,.42) 30%, rgba(11,15,32,.9) 62%);
-  box-shadow: inset 0 0 10px rgba(255,230,0,.1), 0 0 12px rgba(255,230,0,.2);
-}
+.mobile-direction-button:active { border-color: var(--pac); background: rgba(47,91,255,.42); box-shadow: 0 0 18px rgba(255,230,0,.3); }
+.mobile-direction-button:focus-visible { outline: 2px solid var(--pac); outline-offset: 3px; }
 
 .tab { font-family: var(--font-arcade); font-size: 10px; padding: 10px 12px; border: 2px solid #1c2a78; color: #7f95ff; background: #02030a; }
 .tab:hover { color: #fff; border-color: var(--neon); }

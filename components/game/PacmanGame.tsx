@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Pause, Play, Volume2, VolumeX } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Pause, Play, Volume2, VolumeX } from "lucide-react";
 import { DOWN, LEFT, RIGHT, UP, type DifficultyKey, type Vec } from "@/game/constants";
 import type { GameResult, HudState, PacmanEngine } from "@/game/engine";
 import { sound } from "@/game/sound";
@@ -18,6 +18,47 @@ interface Props {
   onLeaderboard: () => void;
   onPlayAgain: () => void;
   onProfile: (p: PlayerProfile) => void;
+}
+
+interface MobileDirectionButtonProps {
+  dir: Vec;
+  label: string;
+  icon: typeof ArrowUp;
+  onPress: (dir: Vec) => void;
+  onRelease: (dir: Vec) => void;
+}
+
+function MobileDirectionButton({ dir, label, icon: Icon, onPress, onRelease }: MobileDirectionButtonProps) {
+  const activePointerRef = useRef<number | null>(null);
+  const releasePointer = (pointerId: number) => {
+    if (activePointerRef.current !== pointerId) return;
+    activePointerRef.current = null;
+    onRelease(dir);
+  };
+
+  useEffect(() => () => {
+    if (activePointerRef.current !== null) onRelease(dir);
+  }, [dir, onRelease]);
+
+  return (
+    <button
+      type="button"
+      className="mobile-direction-button pointer-events-auto"
+      aria-label={label}
+      onPointerDown={(event) => {
+        event.preventDefault();
+        if (activePointerRef.current !== null) return;
+        event.currentTarget.setPointerCapture(event.pointerId);
+        activePointerRef.current = event.pointerId;
+        onPress(dir);
+      }}
+      onPointerUp={(event) => releasePointer(event.pointerId)}
+      onPointerCancel={(event) => releasePointer(event.pointerId)}
+      onLostPointerCapture={(event) => releasePointer(event.pointerId)}
+    >
+      <Icon size={24} strokeWidth={3} aria-hidden="true" />
+    </button>
+  );
 }
 
 /** React owns menus, HUD, save flow. The engine owns everything that changes 60 times per second. */
@@ -70,41 +111,7 @@ export default function PacmanGame({ player, difficulty, onExit, onLeaderboard, 
 
   const pressDir = useCallback((dir: Vec) => engineRef.current?.pressDir(dir), []);
   const releaseDir = useCallback((dir: Vec) => engineRef.current?.releaseDir(dir), []);
-  const releaseAllDirs = useCallback(() => {
-    [UP, LEFT, DOWN, RIGHT].forEach(releaseDir);
-  }, [releaseDir]);
-  const [stick, setStick] = useState({ x: 0, y: 0 });
-  const joystickRef = useRef<HTMLDivElement | null>(null);
   const gamepadDirRef = useRef<Vec | null>(null);
-  const updateJoystick = useCallback((clientX: number, clientY: number) => {
-    const node = joystickRef.current;
-    if (!node) return;
-
-    const rect = node.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dx = clientX - cx;
-    const dy = clientY - cy;
-    const radius = rect.width / 2 - 18;
-    const mag = Math.min(Math.hypot(dx, dy), radius);
-    const angle = Math.atan2(dy, dx);
-    const clampedX = Math.cos(angle) * mag;
-    const clampedY = Math.sin(angle) * mag;
-    const absX = Math.abs(clampedX);
-    const absY = Math.abs(clampedY);
-
-    const nextDir: Vec | null = absX > absY
-      ? (clampedX >= 0 ? RIGHT : LEFT)
-      : (clampedY >= 0 ? DOWN : UP);
-
-    releaseAllDirs();
-    if (nextDir) pressDir(nextDir);
-    setStick({ x: clampedX / radius, y: clampedY / radius });
-  }, [pressDir, releaseAllDirs]);
-  const resetJoystick = useCallback(() => {
-    releaseAllDirs();
-    setStick({ x: 0, y: 0 });
-  }, [releaseAllDirs]);
 
   useEffect(() => {
     let frame = 0;
@@ -192,22 +199,14 @@ export default function PacmanGame({ player, difficulty, onExit, onLeaderboard, 
               {muted ? <VolumeX size={18} strokeWidth={2.8} /> : <Volume2 size={18} strokeWidth={2.8} />}
             </button>
           </div>
-          <div className="pointer-events-none absolute inset-x-0 bottom-[calc(12px+env(safe-area-inset-bottom,0px))] z-20 flex justify-center px-4 md:hidden">
-            <div
-              ref={joystickRef}
-              className="mobile-joystick pointer-events-auto"
-              aria-label="Move controls"
-              onPointerDown={(event) => { event.preventDefault(); updateJoystick(event.clientX, event.clientY); }}
-              onPointerMove={(event) => {
-                if (event.buttons !== 1) return;
-                updateJoystick(event.clientX, event.clientY);
-              }}
-              onPointerUp={resetJoystick}
-              onPointerLeave={resetJoystick}
-              onPointerCancel={resetJoystick}
-            >
-              <div className="mobile-joystick-ring" aria-hidden="true" />
-              <div className="mobile-joystick-stick" style={{ transform: `translate(${stick.x * 28}px, ${stick.y * 28}px)` }} aria-hidden="true" />
+          <div className="mobile-direction-controls pointer-events-none absolute inset-x-0 bottom-[calc(8px+env(safe-area-inset-bottom,0px))] z-20 flex items-end justify-between px-[clamp(24px,8vw,64px)] md:hidden">
+            <div className="mobile-direction-stack pointer-events-none flex flex-col gap-2" role="group" aria-label="Vertical movement controls">
+              <MobileDirectionButton dir={UP} label="Move up" icon={ArrowUp} onPress={pressDir} onRelease={releaseDir} />
+              <MobileDirectionButton dir={DOWN} label="Move down" icon={ArrowDown} onPress={pressDir} onRelease={releaseDir} />
+            </div>
+            <div className="mobile-direction-row pointer-events-none flex gap-2" role="group" aria-label="Horizontal movement controls">
+              <MobileDirectionButton dir={LEFT} label="Move left" icon={ArrowLeft} onPress={pressDir} onRelease={releaseDir} />
+              <MobileDirectionButton dir={RIGHT} label="Move right" icon={ArrowRight} onPress={pressDir} onRelease={releaseDir} />
             </div>
           </div>
         </>
